@@ -29,6 +29,67 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 }
 
 //Write your code here
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+	return ComplexNumber((real*c.real)-(imag*c.imag),(real*c.imag)+(imag*c.real));
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+	return ComplexNumber(((real*c.real)+(imag*c.imag))/(pow(c.real,2)+pow(c.imag,2)),((imag*c.real)-(real*c.imag))/(pow(c.real,2)+pow(c.imag,2)));
+}
+
+double ComplexNumber::abs(){
+    return sqrt(real*real + imag*imag);
+}
+
+double ComplexNumber::angle(){
+    return atan2(imag,real) * 180/M_PI;
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+    if (real == c.real && imag == c.imag) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+ostream & operator<<(ostream &os, const ComplexNumber &c){
+    if (c.real == 0 && c.imag != 0){
+        return os << c.imag << "i";
+    }else if (c.imag == 0){
+        return os << c.real;
+    }else if (c.real != 0 && c.imag < 0){
+        return os << c.real << c.imag << "i";
+    }else if (c.real == 0 && c.imag == 0){
+        return os << "0";
+    }else{
+        return os << c.real << "+" << c.imag << "i";
+    }
+}
+
+ComplexNumber operator+(double x,const ComplexNumber &c){
+	return ComplexNumber(x+c.real,c.imag);
+}
+
+ComplexNumber operator-(double x,const ComplexNumber &c){
+	return ComplexNumber(x-c.real,-c.imag);
+}
+
+ComplexNumber operator*(double x,const ComplexNumber &c){
+	return ComplexNumber(x*c.real,x*c.imag);
+}
+
+ComplexNumber operator/(double x,const ComplexNumber &c){
+	return ComplexNumber((x*c.real)/(pow(c.real,2)+pow(c.imag,2)),(-(x*c.imag))/(pow(c.real,2)+pow(c.imag,2)));
+}
+
+ComplexNumber operator==(double x,const ComplexNumber &c){
+	if (x == c.real && c.imag == 0){
+	    return true;
+	}else { 
+	    return false;
+	}
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
@@ -70,7 +131,6 @@ int main(){
 	cout << (ComplexNumber(1,1) == 1) << "\n";
 	cout << (0 == ComplexNumber()) << "\n";
 }
-
 
 
 
